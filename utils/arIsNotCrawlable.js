@@ -1,0 +1,1 @@
+module.exports = ['script', 'style', 'meta', 'head', 'caption', 'noscript'];
