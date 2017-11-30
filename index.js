@@ -7,7 +7,7 @@ const trim = require('./utils/trim.js');
 
 
 
-const content = require('./testContent/mix.js');
+// const content = require('./testContent/mix.js');HTMLContent
 
 class HTMLContent {
   constructor(content) {
@@ -198,14 +198,4 @@ class HTMLContent {
   }
 }
 
-const analyse = content => {
-  var HTMLObject = new HTMLContent(content);
-
-  return ` 
-    ${HTMLObject.render()} 
-    ========================
-    ${HTMLObject.getTranslated()}` ;
-}
-
-// console.log(provider);
-console.log(analyse(content));
+module.exports = HTMLContent;
