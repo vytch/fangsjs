@@ -51,6 +51,16 @@ class VoiceOverProvider {
     }
   }
 
+  outputDescriptionDesc(e) {
+    return '';
+  }
+
+
+  outputDescriptionList(e) {
+    const $el = this.$(e);
+    return this.announce(`Description list ${$el.find('dt').length} items`);
+  }
+
   outputParagraph(e) {
     return this.announce('*pause*');
   }
@@ -59,11 +69,73 @@ class VoiceOverProvider {
     return this.announce('Link');
   }
 
+  outputTextArea(e){
+    const $textarea = this.$(e);
+    let value = trim($textarea.val());
+
+    if (value === '') {
+      value = 'blank';
+    }
+
+    return this.announce(`Edit text ${value}`);
+  }
+
+  outputInputText(e) {
+    const $text = this.$(e);
+    let value = trim($text.val());
+
+    if (value === '') {
+      value = 'blank';
+    }
+    return this.announce(`Input text ${value}`);
+  }
+
   outputBlockquote(e) {
     return '';
   }
+
   closeBlockquote(e) {
     return '';
+  }
+
+  outputRadio(e) {
+    return '';
+  }
+  closeRadio(e) {
+    return this.announce(`Radio button ${1} of ${2}`);
+  }
+
+  outputButton(e) {
+    return this.announce(`Button`);
+  }
+
+  closeButton(e) {
+    return this.announce(`Button`);
+  }
+
+  outputSubmit(e) {
+    return this.announce(``);
+  }
+  closeSubmit(e) {
+    return this.announce(`Submit`);
+  }
+
+  outputCheckbox(e) {
+    // [TODO]: Checked/ Unchecked
+    return this.announce(`Tickbox`);
+  }
+  closeCheckbox(e) {
+    // [TODO]: Checked/ Unchecked
+    return this.announce(`Tickbox`);
+  }
+
+  outputRadio(e) {
+    // [TODO]: Checked/ Unchecked
+    return this.announce(`Radio button`);
+  }
+  closeRadio(e) {
+    // [TODO]: Checked/ Unchecked
+    return this.announce(`Radio buttons`);
   }
 
   closeLink(e) {
@@ -129,6 +201,25 @@ class VoiceOverProvider {
     return output.join(' ');
   }
 
+  outputProgressBar(e) {
+    const $el = $(e);
+    if($el.attr('aria-valuetext')) {
+      return this.announce($el.attr('aria-valuetext'));
+    } else {
+      return '';
+    }
+    
+  }
+
+  closeProgressBar(e) {
+    const $el = $(e),
+      progress;
+    if($el.attr('aria-valuenow')) {
+      progress = $el.attr('aria-valuenow');
+    }
+    return this.announce(`${progress} Progress indicator`);
+  }
+
   outputRow(e){
     const $tr = this.$(e);
     const $table = $tr.closest('table');
@@ -143,15 +234,12 @@ class VoiceOverProvider {
     return this.announce(`${$firstItem.text()} collapsed option button`);
   }
 
-  outputTextArea(e){
-    const $textarea = this.$(e);
-    let value = trim($textarea.val());
+  outputMenuItem(e) {
+    return '';
+  }
 
-    if (value === '') {
-      value = 'blank';
-    }
-
-    return this.announce(`Edit text ${value}`);
+  closeMenuItem(e) {
+    return this.announce(`menu item`);
   }
 
   closeOption(e){
