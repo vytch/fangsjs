@@ -112,13 +112,18 @@ class VoiceOverProvider {
   closeSubmit(e) {
     return this.announce(`Submit`);
   }
+  outputTooltip(e) {
+    return this.announce(`Tooltip`);
+  }
+  closeTooltip(e) {
+    return this.announce(`Tooltip`);
+  }
 
   outputCheckbox(e) {
     return '';
   }
   closeCheckbox(e) {
     const $input = this.$(e);
-    // [TODO]: Checked/ Unchecked
     return this.announce(` ${$input.prop('checked') ? 'checked' : 'unchecked'},  tickbox`);
   }
 
@@ -131,7 +136,6 @@ class VoiceOverProvider {
     const name = $input.attr('name');
     const $siblings = this.$(`[name="${name}"]`);
     const index = $siblings.index(e) + 1;
-    // [TODO]: Checked/ Unchecked
     return this.announce(`Radio buttons, ${$input.prop('checked') ? 'selected, ' : ''} ${index} of ${$siblings.length}`);
   }
 

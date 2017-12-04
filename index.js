@@ -1,5 +1,6 @@
 require("babel-register");
 const cheerio = require('cheerio');
+const juice = require('juice');
 const VoiceOverProvider = require('./providers/voiceOver.js');
 const arLiterals = require('./utils/arLiterals.js');
 const arIsNotCrawlable = require('./utils/arIsNotCrawlable.js');
@@ -10,8 +11,9 @@ const trim = require('./utils/trim.js');
 // const content = require('./testContent/mix.js');HTMLContent
 
 class HTMLContent {
-  constructor(content) {
-    this.content = content;
+  constructor(content, css) {
+
+    this.content = (typeof css === 'string')? juice.inlineContent(content, css) : content;
     this.translated = '';
     this.wrapperId = "fangs-output";
     this.$ = cheerio.load(`<div id="${this.wrapperId}">${content}</div>` );
@@ -158,6 +160,8 @@ class HTMLContent {
         this.write(this.provider.closeMenuItem(e)); break
       case 'progressbar':
         this.write(this.provider.closeProgressBar(e)); break
+      case 'tooltip':
+        this.write(this.provider.closeTooltip(e)); break
     }
   }
 
@@ -172,28 +176,18 @@ class HTMLContent {
       case 'ul': this.write(this.provider.closeList(e)); break
       case 'ol': this.write(this.provider.closeList(e)); break   
       case 'dl': this.write(this.provider.closeList(e)); break
-      // case 'input': CloseFormInput(e); break
-      case 'a':  this.write(this.provider.closeLink(e)); break
-      case 'frame':  CloseFrame(e); break
-      case 'option': this.write(this.provider.closeOption(e)); break
-    }
-  }
-
-  endOutput(e) {
-    if(typeof e.name === 'undefined'){
-      return '';
-    }
-    switch(e.name.toLowerCase())
-    {
-      case 'blockquote':  this.write(this.provider.closeBlockquote(e)); break
-      case 'table': this.write(this.announce('Table end')); break
-      case 'ul': this.write(this.provider.closeList(e)); break
-      case 'ol': this.write(this.provider.closeList(e)); break   
-      case 'dl': this.write(this.provider.closeList(e)); break
       case 'input': this.write(this.closeFormInput(e)); break
       case 'a':  this.write(this.provider.closeLink(e)); break
       case 'option': this.write(this.provider.closeOption(e)); break
       case 'button': this.write(this.provider.closeButton(e)); break
+    }
+  }
+
+  endOutput(e) {
+    if(e.attribs && e.attribs.role) {
+      this.endRole(e);
+    } else {
+      this.endNative(e);
     }
   } 
 
