@@ -1,4 +1,5 @@
 module.exports = [ 
+  [ /\,/g, 'comma' ],
   [ /-/g, 'dash' ],
   [ />/g, 'greater' ],
   [ /</g, 'less' ],

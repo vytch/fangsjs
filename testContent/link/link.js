@@ -1,0 +1,1 @@
+module.exports = `<a href="#" title="go to hell">Test hello world</a>`;
