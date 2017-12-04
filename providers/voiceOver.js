@@ -113,7 +113,7 @@ class VoiceOverProvider {
     return this.announce(`Submit`);
   }
   outputTooltip(e) {
-    return this.announce(`Tooltip`);
+    return '';
   }
   closeTooltip(e) {
     return this.announce(`Tooltip`);

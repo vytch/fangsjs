@@ -114,6 +114,7 @@ class HTMLContent {
       case 'tabpanel':
       case 'textbox':
       case 'tooltip':
+        this.write(this.provider.outputTooltip(e)); break
       case 'treeitem':
         break;
     }
