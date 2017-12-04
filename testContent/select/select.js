@@ -14,7 +14,5 @@ module.exports = ` <div className="ctrl-holder">
         Option 3
       </option>
     </select>
-
-    <textarea id="display-1"></textarea>
   </div>
 </div>`;
