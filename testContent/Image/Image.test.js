@@ -1,5 +1,5 @@
 const expect = require('expect.js');
-const content = require('./link.js');
+const content = require('./Image.js');
 const Fangs = require('../../index.js');
 const trim = require('../../utils/trim.js');
 
@@ -8,10 +8,10 @@ const output = (txt) => {
 }
 
 describe('Fangs', () => {
-  it('should translate links', () => {
+  it('should translate image', () => {
     const fangContent = new Fangs(content);
     expect(output(fangContent.getTranslated())).to.equal(output(`
-    <span class="announce">Link</span> Test hello world go to hell 
-       `));
+      vytch<span class="announce"> Image</span> 
+    `));
   });
 });

@@ -8,7 +8,7 @@ const output = (txt) => {
 }
 
 describe('Fangs', () => {
-  it('should translate simple table', () => {
+  it('should translate select input', () => {
     const fangContent = new Fangs(content);
     expect(output(fangContent.getTranslated())).to.equal(output(`
     Select field label

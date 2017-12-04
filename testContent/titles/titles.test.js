@@ -8,7 +8,7 @@ const output = (txt) => {
 }
 
 describe('Fangs', () => {
-  it('should translate simple table', () => {
+  it('should translate titles', () => {
     const fangContent = new Fangs(content);
     expect(output(fangContent.getTranslated())).to.equal(output(`
       <span class="announce">Heading level one</span>   
