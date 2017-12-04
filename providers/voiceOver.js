@@ -102,6 +102,7 @@ class VoiceOverProvider {
     return '';
   }
   closeRadio(e) {
+    // [TODO] Count 
     return this.announce(`Radio button ${1} of ${2}`);
   }
 
@@ -212,8 +213,8 @@ class VoiceOverProvider {
   }
 
   closeProgressBar(e) {
-    const $el = $(e),
-      progress;
+    const $el = $(e);
+    let progress = "";
     if($el.attr('aria-valuenow')) {
       progress = $el.attr('aria-valuenow');
     }

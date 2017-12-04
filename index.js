@@ -86,9 +86,9 @@ class HTMLContent {
 
   startOutput(e) {
     if(e.attribs.role) {
-      startRole(e);
-    } esle {
-      startNative(e);
+      this.startRole(e);
+    } else {
+      this.startNative(e);
     }
   }
 
@@ -108,12 +108,9 @@ class HTMLContent {
       case 'radio':
       case 'scrollbar':
       case 'slider':
-      case 'spinbutton':
-      case 'status':
       case 'tab':
       case 'tabpanel':
       case 'textbox':
-      case 'timer':
       case 'tooltip':
       case 'treeitem':
         break;
@@ -210,7 +207,9 @@ class HTMLContent {
     {
       switch(aType.toLowerCase())
       {
-        case 'text':  this.write(this.provider.outputInputText(e)); break
+        case 'text': 
+          this.write(this.provider.outputInputText(e)); 
+          break;
         case 'submit': this.write(this.provider.outputButton(e)); break
         case 'button': this.write(this.provider.outputButton(e)); break
         case 'checkbox': OutputCheckbox(e); break
@@ -219,7 +218,7 @@ class HTMLContent {
       }
     } else {
       //Old html for field. Ouput as plain text field.
-      this.write(this.provider.outputInputText(e)); break
+      this.write(this.provider.outputInputText(e));
     }
   }
 
