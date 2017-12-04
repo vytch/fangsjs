@@ -98,14 +98,6 @@ class VoiceOverProvider {
     return '';
   }
 
-  outputRadio(e) {
-    return '';
-  }
-  closeRadio(e) {
-    // [TODO] Count 
-    return this.announce(`Radio button ${1} of ${2}`);
-  }
-
   outputButton(e) {
     return this.announce(`Button`);
   }
@@ -122,21 +114,25 @@ class VoiceOverProvider {
   }
 
   outputCheckbox(e) {
-    // [TODO]: Checked/ Unchecked
-    return this.announce(`Tickbox`);
+    return '';
   }
   closeCheckbox(e) {
+    const $input = this.$(e);
     // [TODO]: Checked/ Unchecked
-    return this.announce(`Tickbox`);
+    return this.announce(` ${$input.prop('checked') ? 'checked' : 'unchecked'},  tickbox`);
   }
 
   outputRadio(e) {
     // [TODO]: Checked/ Unchecked
-    return this.announce(`Radio button`);
+    return '';
   }
   closeRadio(e) {
+    const $input = this.$(e);
+    const name = $input.attr('name');
+    const $siblings = this.$(`[name="${name}"]`);
+    const index = $siblings.index(e) + 1;
     // [TODO]: Checked/ Unchecked
-    return this.announce(`Radio buttons`);
+    return this.announce(`Radio buttons, ${$input.prop('checked') ? 'selected, ' : ''} ${index} of ${$siblings.length}`);
   }
 
   closeLink(e) {

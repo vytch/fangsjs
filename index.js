@@ -190,9 +190,8 @@ class HTMLContent {
       case 'ul': this.write(this.provider.closeList(e)); break
       case 'ol': this.write(this.provider.closeList(e)); break   
       case 'dl': this.write(this.provider.closeList(e)); break
-      // case 'input': CloseFormInput(e); break
+      case 'input': this.write(this.closeFormInput(e)); break
       case 'a':  this.write(this.provider.closeLink(e)); break
-      case 'frame':  CloseFrame(e); break
       case 'option': this.write(this.provider.closeOption(e)); break
       case 'button': this.write(this.provider.closeButton(e)); break
     }
@@ -200,25 +199,37 @@ class HTMLContent {
 
   //render form input element
   outputFormInput(e) {
-    return '';
+    const $input = this.$(e);
     //Check for type attrib
-    aType = e.attribs('type');
+    const aType = $input.attr('type');
+    console.log('atype', this.provider.outputCheckbox(e));
+
     if(aType!=null)
     {
       switch(aType.toLowerCase())
       {
-        case 'text': 
-          this.write(this.provider.outputInputText(e)); 
-          break;
+        case 'text': this.write(this.provider.outputInputText(e)); break;
         case 'submit': this.write(this.provider.outputButton(e)); break
         case 'button': this.write(this.provider.outputButton(e)); break
-        case 'checkbox': OutputCheckbox(e); break
-        case 'radio': OutputRadio(e); break
-        case 'file': OutputFileUpload(e); break
+        case 'checkbox': this.write(this.provider.outputCheckbox(e)); break
+        case 'radio': this.write(this.provider.outputRadio(e)); break
       }
     } else {
       //Old html for field. Ouput as plain text field.
       this.write(this.provider.outputInputText(e));
+    }
+  }
+
+  closeFormInput(e) {
+    const $input = this.$(e);
+    const aType = $input.attr('type');
+    if(aType!=null)
+    {
+      switch(aType.toLowerCase())
+      {
+        case 'checkbox': this.write(this.provider.closeCheckbox(e)); break
+        case 'radio': this.write(this.provider.closeRadio(e)); break
+      }
     }
   }
 
@@ -234,6 +245,9 @@ class HTMLContent {
   }
 
   write(sText, blnNewLine) {
+    if(typeof sText === 'undefined'){
+      return '';
+    }
     this.translated += ' '+sText;
     if(blnNewLine)
     {
@@ -242,7 +256,7 @@ class HTMLContent {
   }
 
   translate(sText) {
-    if(sText!=null)
+    if(sText!=null && typeof sText !== 'undefined')
     {
       //Loop literals and replace text
       for(let i=0; i < arLiterals.length; i++)

@@ -12,7 +12,6 @@ module.exports = {
   ],
   actions: (data) => {
     const rootPath = `../../testContent/{{properCase name}}`;
-    console.log(data);
     return [{
       type: 'add',
       path: `${rootPath}/{{properCase name}}.js`,
