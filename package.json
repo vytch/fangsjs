@@ -5,7 +5,7 @@
   "homepage": "https://github.com/vytch/fangsjs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vytch/fangsjs.git",
+    "url": "git+https://github.com/vytch/fangsjs.git"
   },
   "main": "index.js",
   "scripts": {
