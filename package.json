@@ -1,7 +1,12 @@
 {
   "name": "fangs.js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
+  "homepage": "https://github.com/vytch/fangsjs",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/vytch/fangsjs.git",
+  },
   "main": "index.js",
   "scripts": {
     "test": "mocha $(find testContent -name '*.test.js')",

@@ -12,6 +12,17 @@ This version supports:
 - Role attribute
 - Multiple provider (although only VoiceOver is implemented)
 
+## Why fang.js
+
+There are already a lot of tools to test your page's accessibility.
+I also use those tools a lot.
+
+However there was a need to test if my projects were not just complient, but also meaningful to most screen readers.
+
+This is why I had a look at Fangs.
+
+This was, in my styleguide, I can review hown my component dispalys on screen, and also how it will read on a screenreader:
+![Styleguide](/assets/screenshot.png?raw=true "Screenshot of a styleguide")
 
 ## Installation
 
