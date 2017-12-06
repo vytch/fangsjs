@@ -197,7 +197,7 @@ class HTMLContent {
     const $input = this.$(e);
     //Check for type attrib
     const aType = $input.attr('type');
-    console.log('atype', this.provider.outputCheckbox(e));
+    // console.log('atype', this.provider.outputCheckbox(e));
 
     if(aType!=null)
     {

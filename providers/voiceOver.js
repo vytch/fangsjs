@@ -8,7 +8,7 @@ class VoiceOverProvider {
     this.announce = announce;
     this.translate = translate;
     this.$ = $;
-    console.log('VoiceOverProvider');
+    // console.log('VoiceOverProvider');
   }
   outputHeading(heading) {
     switch(heading) {
