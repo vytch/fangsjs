@@ -2,10 +2,11 @@ module.exports = e => {
   let iOrderNo = 1;
 
   let psib = e.previousSibling;
-  
+  console.log(e);
+
   while (psib!=null)
   {
-    if(psib.nodeName.toLowerCase()==e.nodeName.toLowerCase())
+    if(psib.name.toLowerCase() == e.name.toLowerCase())
     {
       iOrderNo++;
     }

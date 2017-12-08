@@ -160,14 +160,17 @@ class VoiceOverProvider {
 
   outputListItem(e) {
     //Check list type
-    if(e.parentNode.name.toLowerCase()=='ul')
+    const $el = this.$(e);
+    const $parent = $el.parent();
+    if($parent[0].name==='ul')
     {
       return this.announce('bullet');
     }
     
-    if(e.parentNode.name.toLowerCase()=='ol')
+    if($parent[0].name==='ol')
     {
-      return this.announce(GetSiblingOrder(e) + '');
+      const index = $parent.children('li').index(e) + 1;
+      return this.announce(index + '');
     } 
   }
 
