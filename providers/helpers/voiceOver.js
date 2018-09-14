@@ -1,5 +1,9 @@
 const ChildElementCount = require('../../utils/ChildElementCount.js');
 const arLiterals = require('../../utils/arLiterals.js');
+const trim = require('../../utils/trim.js');
+
+const GetSiblingOrder = require('../../utils/GetSiblingOrder.js');
+const cheerio = require('cheerio');
 
 const coreElement = {
     announce: {
@@ -69,6 +73,13 @@ const heading = {
 const descriptionList = {
   output: function ($el) {
     return this.announce(`Description list ${$el.find('dt').length} items`);
+  },
+  close: function() {}
+};
+
+const descriptionDesc = {
+  output: function() {
+    return ''
   },
   close: function() {}
 };
@@ -248,7 +259,9 @@ const table = {
 
     return output.join(' ');
   },
-  close: function() {}
+  close: function() {
+    return this.announce('Table end');
+  }
 }
 
 const row = {
@@ -301,6 +314,7 @@ const ElFactory = {
       heading,
       image,
       descriptionList,
+      descriptionDesc,
       paragraph,
       link,
       textArea,
@@ -322,4 +336,4 @@ const ElFactory = {
     }
 };
 
-console.log(ElFactory.El('paragraph').output());
+module.exports = ElFactory;
