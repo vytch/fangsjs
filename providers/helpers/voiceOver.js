@@ -34,6 +34,16 @@ const El = {
   close: function() {}
 };
 
+const option = {
+  output: function() {
+    return '';
+  },
+  close: function() {
+    return this.announce(`menu item`);
+  }
+};
+
+
 const image = {
   output: function(e) {
     if (e.name.toLowerCase()=='img') {
@@ -71,7 +81,8 @@ const heading = {
 };
 
 const descriptionList = {
-  output: function ($el) {
+  output: function (e) {
+    const $el = cheerio.load(e);
     return this.announce(`Description list ${$el.find('dt').length} items`);
   },
   close: function() {}
@@ -95,11 +106,19 @@ const link = {
   output: function() {
     return this.announce('Link');
   },
-  close: function() {}
+  close: function(e) {
+    if(typeof e.attribs.title != 'undefined'){
+     return e.attribs.title;
+    } else {
+      return '';
+    }
+
+  }
 };
 
 const textArea = {
   output: function($textarea) {
+
     let value = trim($textarea.val());
 
     if (value === '') {
@@ -113,6 +132,7 @@ const textArea = {
 
 const inputText = {
   output: function($text) {
+
     let value = trim($text.val());
 
     if (value === '') {
@@ -137,7 +157,7 @@ const button = {
     return 'Button';
   },
   close: function() {
-    return 'Button';
+    return this.announce('Button');
   }
 };
 
@@ -172,9 +192,7 @@ const radio = {
   output: function() {
     return '';
   },
-  close: function($input) {
-    const name = $input.attr('name');
-    const $siblings = this.$(`[name="${name}"]`);
+  close: function($input, $siblings, e) {
     const index = $siblings.index(e) + 1;
     return this.announce(`Radio buttons, ${$input.prop('checked') ? 'selected, ' : ''} ${index} of ${$siblings.length}`);
   }
@@ -196,9 +214,9 @@ const list = {
 };
 
 const listItem = {
-  output: function(e) {
+  output: function($el, e) {
     //Check list type
-    const $el = this.$(e);
+
     const $parent = $el.parent();
     if($parent[0].name==='ul')
     {
@@ -216,7 +234,7 @@ const listItem = {
 
 const progressBar = {
   output: function(e) {
-    const $el = $(e);
+    const $el = cheerio.load(e);
     if($el.attr('aria-valuetext')) {
       return this.announce($el.attr('aria-valuetext'));
     } else {
@@ -224,7 +242,7 @@ const progressBar = {
     }
   },
   close: function(e) {
-    const $el = $(e);
+    const $el = cheerio.load(e);
     let progress = "";
     if($el.attr('aria-valuenow')) {
       progress = $el.attr('aria-valuenow');
@@ -265,8 +283,7 @@ const table = {
 }
 
 const row = {
-  output: function(e) {
-    const $tr = this.$(e);
+  output: function($tr, e) {
     const $table = $tr.closest('table');
     const index = $table.find('tr').index(e) + 1;
 
@@ -276,12 +293,9 @@ const row = {
 };
 
 const select = {
-  output: function(e) {
-    const $tr = this.$(e);
-    const $table = $tr.closest('table');
-    const index = $table.find('tr').index(e) + 1;
-
-    return this.announce(`Row ${index} of ${$table.find('tr').length}`);
+  output: function($select) {
+   const $firstItem = $select.find('option').eq(0);
+   return this.announce(`${$firstItem.text()} collapsed option button`);
   },
   close: function() {}
 };
@@ -296,8 +310,7 @@ const menuItem = {
 };
 
 const col = {
-  output: function(e) {
-    const $cell = this.$(e);
+  output: function($cell, e) {
     const $tr = $cell.closest('tr');
     const index = $tr.find('td,th').index(e) + 1;
 
@@ -308,6 +321,9 @@ const col = {
 
 const ElFactory = {
     El(type) {
+      if (typeof this.bundle[type] === 'undefined') {
+        throw new Error(`${type} not supported.`)
+      }
       return Object.create(this.bundle[type], coreElement);
     },
     bundle: {
@@ -327,6 +343,7 @@ const ElFactory = {
       radio,
       list,
       listItem,
+      option,
       progressBar,
       table,
       row,

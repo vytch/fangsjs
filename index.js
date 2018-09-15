@@ -139,14 +139,14 @@ class HTMLContent {
       case 'img': this.write(ElFactory.El('image').output(e)); break
       case 'ul':  this.write(ElFactory.El('list').output(e)); break
       case 'ol':  this.write(ElFactory.El('list').output(e)); break
-      case 'li':  this.write(ElFactory.El('listItem').output(e)); break
+      case 'li':  this.write(ElFactory.El('listItem').output(this.$(e), e)); break
       case 'table':this.write(ElFactory.El('table').output(e)); break
-      case 'tr': this.write(ElFactory.El('row').output(e)); break
+      case 'tr': this.write(ElFactory.El('row').output(this.$(e), e)); break
       case 'td':
-      case 'th': this.write(ElFactory.El('col').output(e)); break
-      case 'input': this.write(ElFactory.El('input').output(e)); break
+      case 'th': this.write(ElFactory.El('col').output(this.$(e), e)); break
+      case 'input': this.write(this.outputFormInput(e)); break
       case 'textarea': this.write(ElFactory.El('textArea').output(e)); break
-      case 'select': this.write(ElFactory.El('select').output(e)); break
+      case 'select': this.write(ElFactory.El('select').output(this.$(e))); break
       case 'dd': this.write(ElFactory.El('descriptionDesc').output(e)); break
       case 'dl': this.write(ElFactory.El('descriptionlist').output(e)); break
       case 'frame': OutputFrame(e); break
@@ -206,7 +206,7 @@ class HTMLContent {
     {
       switch(aType.toLowerCase())
       {
-        case 'text': this.write(ElFactory.El('inputText').output(e)); break;
+        case 'text': this.write(ElFactory.El('inputText').output($input)); break;
         case 'submit': this.write(ElFactory.El('button').output(e)); break
         case 'button': this.write(ElFactory.El('button').output(e)); break
         case 'checkbox': this.write(ElFactory.El('checkbox').output(e)); break
@@ -225,8 +225,8 @@ class HTMLContent {
     {
       switch(aType.toLowerCase())
       {
-        case 'checkbox': this.write(ElFactory.El('checkbox').close(e)); break
-        case 'radio': this.write(ElFactory.El('radio').close(e)); break
+        case 'checkbox': this.write(ElFactory.El('checkbox').close($input)); break
+        case 'radio': this.write(ElFactory.El('radio').close($input, this.$(`[name="${$input.attr('name')}"]`), e)); break
       }
     }
   }
