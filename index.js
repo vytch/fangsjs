@@ -1,4 +1,6 @@
 require("babel-register");
+
+const ElFactory = require('./providers/helpers/voiceOver');
 const cheerio = require('cheerio');
 const juice = require('juice');
 const VoiceOverProvider = require('./providers/voiceOver.js');
@@ -13,12 +15,13 @@ const trim = require('./utils/trim.js');
 class HTMLContent {
   constructor(content, css) {
 
+    // If the css is passed, then we need to take it into account and render the HTML with CSS applied.
     this.content = (typeof css === 'string')? juice.inlineContent(content, css) : content;
     this.translated = '';
     this.wrapperId = "fangs-output";
     this.$ = cheerio.load(`<div id="${this.wrapperId}">${content}</div>` );
     this.$container = this.$(`#${this.wrapperId}`);
-    this.provider = new VoiceOverProvider(this.announce, this.translate, this.$);
+    // this.provider = new VoiceOverProvider(this.$);
     this.crawl(this.$container[0], 0);
   }
 
@@ -29,28 +32,28 @@ class HTMLContent {
 
     //write element info
     if(e.nodeType==3)
-    { 
+    {
 
       if(trim(e.data).length > 0)
       {
-        this.write(' ' + this.translate(e.data));      
+        this.write(' ' + this.translate(e.data));
       }
     } else {
-      this.startOutput(e);   
+      this.startOutput(e);
     }
-    
+
     //Do not dive into the follwoing elements
     if(this.isCrawlable(e))
-    { 
-      var ch = e.firstChild;  
-      
+    {
+      var ch = e.firstChild;
+
       while (ch!=null)
       {
         this.crawl(ch, r+1);
         ch= ch.nextSibling;
-      } 
+      }
     }
-    
+
     //Close element
     this.endOutput(e);
   }
@@ -66,7 +69,7 @@ class HTMLContent {
       if(e.name.toLowerCase()==arIsNotCrawlable[i])
       {
         return false;
-      } 
+      }
     }
     return true;
   }
@@ -76,7 +79,7 @@ class HTMLContent {
     const $el = this.$(e);
 
     if(e.attribs && $el.css('display') === 'none')
-    { 
+    {
       return true;
     }
 
@@ -97,16 +100,16 @@ class HTMLContent {
   startRole(e) {
     switch(e.attribs.role) {
       case 'button':
-        this.write(this.provider.outputButton(e)); break
+        this.write(ElFactory.El('button').output(e)); break
       case 'link':
-        this.write(this.provider.outputLink(e)); break
+        this.write(ElFactory.El('link').output(e)); break
       case 'menuitem':
       case 'menuitemcheckbox':
       case 'menuitemradio':
-        this.write(this.provider.outputMenuItem(e)); break
+        this.write(ElFactory.El('menuItem').output(e)); break
       case 'option':
       case 'progressbar':
-        this.write(this.provider.outputProgressBar(e)); break
+        this.write(ElFactory.El('progressbar').output(e)); break
       case 'radio':
       case 'scrollbar':
       case 'slider':
@@ -114,7 +117,7 @@ class HTMLContent {
       case 'tabpanel':
       case 'textbox':
       case 'tooltip':
-        this.write(this.provider.outputTooltip(e)); break
+        this.write(ElFactory.El('tooltip').output(e)); break
       case 'treeitem':
         break;
     }
@@ -123,32 +126,32 @@ class HTMLContent {
   startNative(e) {
     switch(e.name.toLowerCase())
     {
-      case 'blockquote':  this.write(this.provider.outputBlockquote(e)); break
-      case 'a':  this.write(this.provider.outputLink(e)); break 
-      case 'h1':  
-      case 'h2':  
-      case 'h3':  
-      case 'h4':  
-      case 'h5':  
-      case 'h6':  
-      case 'h7':  this.write(this.provider.outputHeading(e.name.toLowerCase())); break
-      case 'p':  this.write(this.provider.outputParagraph('*pause*')); break
-      case 'img': this.write(this.provider.outputImage(e)); break   
-      case 'ul':  this.write(this.provider.outputList(e)); break    
-      case 'ol':  this.write(this.provider.outputList(e)); break  
-      case 'li':  this.write(this.provider.outputListItem(e)); break        
-      case 'table':this.write(this.provider.outputTable(e)); break
-      case 'tr': this.write(this.provider.outputRow(e)); break
+      case 'blockquote':  this.write(ElFactory.El('blockquote').output(e)); break
+      case 'a':  this.write(ElFactory.El('link').output(e)); break
+      case 'h1':
+      case 'h2':
+      case 'h3':
+      case 'h4':
+      case 'h5':
+      case 'h6':
+      case 'h7':  this.write(ElFactory.El('heading').output(e.name.toLowerCase())); break
+      case 'p':  this.write(ElFactory.El('paragraph').output()); break
+      case 'img': this.write(ElFactory.El('image').output(e)); break
+      case 'ul':  this.write(ElFactory.El('list').output(e)); break
+      case 'ol':  this.write(ElFactory.El('list').output(e)); break
+      case 'li':  this.write(ElFactory.El('listItem').output(this.$(e), e)); break
+      case 'table':this.write(ElFactory.El('table').output(e)); break
+      case 'tr': this.write(ElFactory.El('row').output(this.$(e), e)); break
       case 'td':
-      case 'th': this.write(this.provider.outputCol(e)); break
+      case 'th': this.write(ElFactory.El('col').output(this.$(e), e)); break
       case 'input': this.write(this.outputFormInput(e)); break
-      case 'textarea': this.write(this.provider.outputTextArea(e)); break
-      case 'select': this.write(this.provider.outputSelect(e)); break
-      case 'dd': this.write(this.provider.outputDescriptionDesc(e)); break
-      case 'dl': this.write(this.provider.outputDescriptionList(e)); break
+      case 'textarea': this.write(ElFactory.El('textArea').output(e)); break
+      case 'select': this.write(ElFactory.El('select').output(this.$(e))); break
+      case 'dd': this.write(ElFactory.El('descriptionDesc').output(e)); break
+      case 'dl': this.write(ElFactory.El('descriptionlist').output(e)); break
       case 'frame': OutputFrame(e); break
 
-      default: ;         
+      default: ;
     }
   }
 
@@ -158,11 +161,11 @@ class HTMLContent {
       case 'menuitem':
       case 'menuitemcheckbox':
       case 'menuitemradio':
-        this.write(this.provider.closeMenuItem(e)); break
+        this.write(ElFactory.El('menuItem').close(e)); break
       case 'progressbar':
-        this.write(this.provider.closeProgressBar(e)); break
+        this.write(ElFactory.El('progressBar').close(e)); break
       case 'tooltip':
-        this.write(this.provider.closeTooltip(e)); break
+        this.write(ElFactory.El('tooltip').close(e)); break
     }
   }
 
@@ -172,15 +175,15 @@ class HTMLContent {
     }
     switch(e.name.toLowerCase())
     {
-      case 'blockquote':  this.write(this.provider.closeBlockquote(e)); break
-      case 'table': this.write(this.announce('Table end')); break
-      case 'ul': this.write(this.provider.closeList(e)); break
-      case 'ol': this.write(this.provider.closeList(e)); break   
-      case 'dl': this.write(this.provider.closeList(e)); break
+      case 'blockquote':  this.write(ElFactory.El('blockquote').close(e)); break
+      case 'table': this.write(ElFactory.El('table').close()); break
+      case 'ul': this.write(ElFactory.El('list').close(e)); break
+      case 'ol': this.write(ElFactory.El('list').close(e)); break
+      case 'dl': this.write(ElFactory.El('list').close(e)); break
       case 'input': this.write(this.closeFormInput(e)); break
-      case 'a':  this.write(this.provider.closeLink(e)); break
-      case 'option': this.write(this.provider.closeOption(e)); break
-      case 'button': this.write(this.provider.closeButton(e)); break
+      case 'a':  this.write(ElFactory.El('link').close(e)); break
+      case 'option': this.write(ElFactory.El('option').close(e)); break
+      case 'button': this.write(ElFactory.El('button').close(e)); break
     }
   }
 
@@ -190,7 +193,7 @@ class HTMLContent {
     } else {
       this.endNative(e);
     }
-  } 
+  }
 
   //render form input element
   outputFormInput(e) {
@@ -203,15 +206,15 @@ class HTMLContent {
     {
       switch(aType.toLowerCase())
       {
-        case 'text': this.write(this.provider.outputInputText(e)); break;
-        case 'submit': this.write(this.provider.outputButton(e)); break
-        case 'button': this.write(this.provider.outputButton(e)); break
-        case 'checkbox': this.write(this.provider.outputCheckbox(e)); break
-        case 'radio': this.write(this.provider.outputRadio(e)); break
+        case 'text': this.write(ElFactory.El('inputText').output($input)); break;
+        case 'submit': this.write(ElFactory.El('button').output(e)); break
+        case 'button': this.write(ElFactory.El('button').output(e)); break
+        case 'checkbox': this.write(ElFactory.El('checkbox').output(e)); break
+        case 'radio': this.write(ElFactory.El('radio').output(e)); break
       }
     } else {
       //Old html for field. Ouput as plain text field.
-      this.write(this.provider.outputInputText(e));
+      this.write(ElFactory.El('inputText').output(e));
     }
   }
 
@@ -222,20 +225,9 @@ class HTMLContent {
     {
       switch(aType.toLowerCase())
       {
-        case 'checkbox': this.write(this.provider.closeCheckbox(e)); break
-        case 'radio': this.write(this.provider.closeRadio(e)); break
+        case 'checkbox': this.write(ElFactory.El('checkbox').close($input)); break
+        case 'radio': this.write(ElFactory.El('radio').close($input, this.$(`[name="${$input.attr('name')}"]`), e)); break
       }
-    }
-  }
-
-
-  announce(sText) {
-    if(sText.length > 0)
-    {
-      return "<span class='announce'>" + sText + "</span> ";
-    } else
-    {
-      return "";
     }
   }
 
@@ -250,6 +242,10 @@ class HTMLContent {
     }
   }
 
+  render() {
+    return this.$container.html();
+  }
+
   translate(sText) {
     if(sText!=null && typeof sText !== 'undefined')
     {
@@ -258,13 +254,9 @@ class HTMLContent {
       {
         sText = sText.replace(arLiterals[i][0], ' ' + arLiterals[i][1] + ' ');
       }
-      
+
       return sText;
     } else { return "";}
-  }
-
-  render() {
-    return this.$container.html();
   }
 
   getTranslated() {
