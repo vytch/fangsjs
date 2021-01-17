@@ -1,11 +1,15 @@
 # TODO list
 
-[ ] Typescript
+[x] Typescript
 [x] Commitzen
 [x] Rollup
 [ ] cli
 [ ] Playground
 [ ] Package.json (files/typings)
 [ ] PublishConfig
-[ ] Unit-Test
+[x] Unit-Test
 [ ] Github actions
+
+
+[ ] Unit-test textArea
+[ ]

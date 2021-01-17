@@ -11,15 +11,15 @@ module.exports = {
     },
   ],
   actions: (data) => {
-    const rootPath = `../../testContent/{{properCase name}}`;
+    const rootPath = `../../src/providers/helpers/{{properCase name}}`;
     return [{
       type: 'add',
-      path: `${rootPath}/{{properCase name}}.js`,
+      path: `${rootPath}/{{properCase name}}.ts`,
       templateFile: './component/component.js.hbs',
       abortOnFail: true,
     }, {
       type: 'add',
-      path: `${rootPath}/{{properCase name}}.test.js`,
+      path: `${rootPath}/{{properCase name}}.test.ts`,
       templateFile: './component/component.test.js.hbs',
       abortOnFail: true,
     }

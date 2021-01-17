@@ -1,4 +1,4 @@
-import content from './{{ properCase name }}';
+import content from './Button';
 import {Fang} from '../../..';
 import trim from '../../../utils/trim';
 
@@ -7,10 +7,10 @@ const output = (txt:string):string => {
 }
 
 describe('Fangs', () => {
-  it('should translate {{ name }}', () => {
+  it('should translate Button', () => {
     const fangContent = new Fang(content);
     expect(output(fangContent.getTranslated())).toEqual(output(`
-      {{ name }}
+      Submit <span class="announce">Button</span>
     `));
   });
 });

@@ -141,7 +141,7 @@ export class Fang {
       switch(aType.toLowerCase())
       {
         case 'checkbox': this.write(ElFactory.El('checkbox').close(e, $input)); break
-        // case 'radio': this.write(ElFactory.El('radio').close(e, $input, this.$(`[name="${$input.attr('name')}"]`))); break
+        case 'radio': this.write(ElFactory.El('radio').close(e, $input, this.$(`[name="${$input.attr('name')}"]`))); break
       }
     }
   }
@@ -171,7 +171,7 @@ export class Fang {
         this.write(ElFactory.El('link').output(e)); break
       case 'menuitem':
       case 'menuitemcheckbox':
-      case 'menuitemradio':
+      case 'menuitemNode':
         this.write(ElFactory.El('menuItem').output(e)); break
       case 'option':
       case 'progressbar':

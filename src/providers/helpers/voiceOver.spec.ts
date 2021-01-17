@@ -13,6 +13,5 @@ describe('voiceOver', () => {
         `vytch<span class='announce'> Image</span>`
       );
     });
-  })
-
+  });
 });

@@ -14,7 +14,7 @@
     "watch": "rollup -c -w",
     "test": "jest",
     "test2": "mocha $(find testContent -name '*.test.js')",
-    "plop": "plop --plopfile config/generators/index.js"
+    "gen": "plop --plopfile config/generators/index.js"
   },
   "author": "",
   "license": "ISC",

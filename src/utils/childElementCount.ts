@@ -1,4 +1,4 @@
-export const childElementCount = (e: cheerio.TagElement): number => {
+export const childElementCount = (e: any): number => {
   let iCount:number = 0;
   //Count non-text child nodes
   if(e!=null)
