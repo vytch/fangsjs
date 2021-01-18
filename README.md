@@ -2,8 +2,7 @@
 
 This is an update from Fangs, by Peter Krantz.
 
-Fangs is a screenreader emulator.
-It basically turn any HTML mark up as a string and return a screenreader transcript.
+Fangs is a screenreader emulator. It basically turn any HTML mark up as a string and return a screenreader transcript.
 
 This version supports:
 
@@ -14,15 +13,13 @@ This version supports:
 
 ## Why fang.js
 
-There are already a lot of tools to test your page's accessibility.
-I also use those tools a lot.
+There are already a lot of tools to test your page's accessibility. I also use those tools a lot.
 
 However there was a need to test if my projects were not just complient, but also meaningful to most screen readers.
 
 This is why I had a look at Fangs.
 
-This was, in my styleguide, I can review hown my component dispalys on screen, and also how it will read on a screenreader:
-![Styleguide](/assets/screenshot.png?raw=true "Screenshot of a styleguide")
+This was, in my styleguide, I can review hown my component dispalys on screen, and also how it will read on a screenreader: ![Styleguide](/assets/screenshot.png?raw=true "Screenshot of a styleguide")
 
 ## Installation
 
@@ -53,7 +50,7 @@ const fangContent = new Fangs(content);
 
 console.log(fangContent.getTranslated());
 
-/* outputs: 
+/* outputs:
    <span class="announce">Heading level one</span>   
     H1 Title
    <span class="announce">Heading level two</span>   
@@ -67,7 +64,6 @@ console.log(fangContent.getTranslated());
    <span class="announce">Heading level six</span>   
     H6 Title
 */
-
 ```
 
 ## Aria-hidden
@@ -88,18 +84,15 @@ const fangContent = new Fangs(content);
 
 console.log(fangContent.getTranslated());
 
-/* outputs: 
-  <span class=\'announce\'>*pause*</span> To display 
+/* outputs:
+  <span class=\'announce\'>*pause*</span> To display
   <span class=\'announce\'>*pause*</span> To display too
 */
-
 ```
 
 ## CSS support
 
-Sometime, context can be hidden with CSS. It should not be displayed then.
-There is an option to pass the CSS of your site as a second paramater.
-Note that CSS is a string.
+Sometime, context can be hidden with CSS. It should not be displayed then. There is an option to pass the CSS of your site as a second paramater. Note that CSS is a string.
 
 Behind the hood, we are using juice.js to apply CSS to the HTML.
 
@@ -126,7 +119,7 @@ content = `
 
 const fangContent = new Fangs(content, style);
 console.log(fangContent.render());
-/* outputs: 
+/* outputs:
   <div class="to-show">
    Displayed content
   </div>
@@ -136,15 +129,14 @@ console.log(fangContent.render());
 */
 
 console.log(fangContent.getTranslated());
-/* outputs: 
+/* outputs:
   Displayed content
 */
 ```
 
 ## Contribute
 
-Not all aria tags are supported at the moment.
-You are welcome to contribute to this project.
+Not all aria tags are supported at the moment. You are welcome to contribute to this project.
 
 If you want to contribute, please use the generator provided in this project.
 
