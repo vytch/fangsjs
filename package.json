@@ -17,7 +17,7 @@
     "commit": "cz",
     "build": "rollup -c",
     "watch": "rollup -c -w",
-    "test": "jest --coverage",
+    "test": "jest",
     "gen": "plop --plopfile config/generators/index.js",
     "semantic-release": "semantic-release"
   },
