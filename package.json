@@ -11,6 +11,7 @@
     "registry": "https://npm.pkg.github.com"
   },
   "main": "dist/index.js",
+  "files": "dist",
   "typings": "dist/index.d.ts",
   "scripts": {
     "commit": "cz",
