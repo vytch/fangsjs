@@ -8,6 +8,7 @@
     "url": "git+https://github.com/vytch/fangsjs.git"
   },
   "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
     "commit": "cz",
     "build": "rollup -c",

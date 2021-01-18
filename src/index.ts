@@ -23,7 +23,7 @@ export class Fang {
     }
 
   }
-  crawl(e:any, r:number) {
+  private crawl(e:any, r:number) {
 
     if(!(e.nodeType==1 || e.nodeType==3) || this.isHidden(e))
       return;
@@ -56,7 +56,7 @@ export class Fang {
     this.endOutput(e);
   }
 
-  startOutput(e:cheerio.TagElement) {
+  private startOutput(e:cheerio.TagElement) {
     if(e.attribs.role) {
       this.startRole(e);
     } else {
@@ -64,7 +64,7 @@ export class Fang {
     }
   }
 
-  startNative(e: cheerio.TagElement) {
+  private startNative(e: cheerio.TagElement) {
     switch(e.name.toLowerCase())
     {
       case 'blockquote':  this.write(ElFactory.El('blockquote').output(e)); break
@@ -100,7 +100,7 @@ export class Fang {
     }
   }
 
-  write(sText:string, blnNewLine:boolean = false) {
+  private write(sText:string, blnNewLine:boolean = false) {
     if(typeof sText === 'undefined'){
       return '';
     }
@@ -111,7 +111,7 @@ export class Fang {
     }
   }
 
-  endOutput(e:cheerio.TagElement) {
+  private endOutput(e:cheerio.TagElement) {
     if(e.attribs && e.attribs.role) {
       this.endRole(e);
     } else {
@@ -119,7 +119,7 @@ export class Fang {
     }
   }
 
-  endRole(e:cheerio.TagElement) {
+  private endRole(e:cheerio.TagElement) {
     switch(e.attribs.role)
     {
       case 'menuitem':
@@ -133,7 +133,7 @@ export class Fang {
     }
   }
 
-  closeFormInput(e:cheerio.TagElement) {
+  private closeFormInput(e:cheerio.TagElement) {
     const $input = this.$(e);
     const aType = $input.attr('type');
     if(aType!=null)
@@ -146,7 +146,7 @@ export class Fang {
     }
   }
 
-  endNative(e:cheerio.TagElement) {
+  private endNative(e:cheerio.TagElement) {
     if(typeof e.name === 'undefined'){
       return '';
     }
@@ -163,7 +163,7 @@ export class Fang {
       case 'button': this.write(ElFactory.El('button').close(e)); break
     }
   }
-  startRole(e:cheerio.TagElement) {
+  private startRole(e:cheerio.TagElement) {
     switch(e.attribs.role) {
       case 'button':
         this.write(ElFactory.El('button').output(e)); break
@@ -189,7 +189,7 @@ export class Fang {
     }
   }
 
-  isCrawlable(e:cheerio.TagElement):boolean {
+  private isCrawlable(e:cheerio.TagElement):boolean {
     if(this.isHidden(e) || typeof e.name === 'undefined')
     {
       return false;
@@ -205,7 +205,7 @@ export class Fang {
     return true;
   }
 
-  isHidden(e:cheerio.TagElement):boolean {
+  private isHidden(e:cheerio.TagElement):boolean {
     const $el:cheerio.Cheerio = this.$(e);
 
     if(e.attribs && $el.css('display') === 'none')
@@ -222,7 +222,7 @@ export class Fang {
   }
 
   //render form input element
-  outputFormInput(e: cheerio.TagElement):void {
+  private outputFormInput(e: cheerio.TagElement):void {
     const $input = this.$(e);
     //Check for type attrib
     const aType = $input.attr('type');
@@ -244,7 +244,7 @@ export class Fang {
     }
   }
 
-  translate(sText:string):string {
+  private translate(sText:string):string {
     if(sText!=null && typeof sText !== 'undefined')
     {
       //Loop literals and replace text
