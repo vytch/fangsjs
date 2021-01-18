@@ -2,7 +2,8 @@
 
 ## Status
 
-![](https://github.com/vytch/fangjs/workflows/CI/badge.svg?branch=develop&event=push) [![codecov](https://codecov.io/gh/vytch/fangsjs/branch/master/graph/badge.svg?token=FT4OZCI8IJ)](https://codecov.io/gh/vytch/fangsjs)
+![](https://github.com/vytch/fangsjs/workflows/CI/badge.svg?branch=develop&event=push)
+[![codecov](https://codecov.io/gh/vytch/fangsjs/branch/master/graph/badge.svg?token=FT4OZCI8IJ)](https://codecov.io/gh/vytch/fangsjs)
 
 This is an update from Fangs, by Peter Krantz.
 
