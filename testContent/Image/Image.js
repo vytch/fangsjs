@@ -1,1 +1,0 @@
-module.exports = `<img alt="vytch" src="test.jpg" />`;

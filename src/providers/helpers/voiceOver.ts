@@ -69,7 +69,6 @@ class Heading extends CoreElement {
     h7: 'Heading level seven'
   }
   output(e:cheerio.TagElement){
-    console.log(e);
     return this.announce(this.labels[e.name.toLowerCase()]);
   }
   close() {
@@ -343,8 +342,8 @@ export class ElFactory {
     switch (type) {
       case 'heading':
         return new Heading();
-        case 'button':
-          return new Button();
+      case 'button':
+        return new Button();
       case 'paragraph':
         return new Paragraph();
       case 'image':
@@ -363,10 +362,10 @@ export class ElFactory {
           return new List();
       case 'table':
           return new Table();
-          case 'row':
-              return new Row();
-              case 'col':
-                  return new Col();
+      case 'row':
+          return new Row();
+      case 'col':
+          return new Col();
       case 'listItem':
           return new ListItem();
       case 'select':
