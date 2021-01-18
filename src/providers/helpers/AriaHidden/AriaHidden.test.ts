@@ -1,4 +1,5 @@
-import content from './{{ properCase name }}';
+
+import content from './AriaHidden';
 import {Fang} from '../../..';
 import trim from '../../../utils/trim';
 
@@ -7,10 +8,11 @@ const output = (txt:string):string => {
 }
 
 describe('Fangs', () => {
-  it('should translate {{ name }}', () => {
+  it('should translate Aria Hidden', () => {
     const fangContent = new Fang(content);
     expect(output(fangContent.getTranslated())).toEqual(output(`
-      {{ name }}
+      <span class=\'announce\'>*pause*</span> To display
+      <span class=\'announce\'>*pause*</span> To display too
     `));
   });
 });

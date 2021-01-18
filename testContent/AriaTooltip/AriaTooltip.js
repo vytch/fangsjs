@@ -1,1 +1,0 @@
-module.exports = `<div role="tooltip">Some content</div>`;

@@ -1,4 +1,4 @@
-import content from './{{ properCase name }}';
+import content from './AriaTooltip';
 import {Fang} from '../../..';
 import trim from '../../../utils/trim';
 
@@ -7,10 +7,10 @@ const output = (txt:string):string => {
 }
 
 describe('Fangs', () => {
-  it('should translate {{ name }}', () => {
+  it('should translate Aria tooltip', () => {
     const fangContent = new Fang(content);
     expect(output(fangContent.getTranslated())).toEqual(output(`
-      {{ name }}
+      Some content <span class="announce">Tooltip</span>
     `));
   });
 });

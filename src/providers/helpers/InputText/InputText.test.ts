@@ -1,4 +1,4 @@
-import content from './{{ properCase name }}';
+import content from './InputText';
 import {Fang} from '../../..';
 import trim from '../../../utils/trim';
 
@@ -7,10 +7,10 @@ const output = (txt:string):string => {
 }
 
 describe('Fangs', () => {
-  it('should translate {{ name }}', () => {
+  it('should translate input text', () => {
     const fangContent = new Fang(content);
     expect(output(fangContent.getTranslated())).toEqual(output(`
-      {{ name }}
+      Your name <span class="announce">Input text blank</span>
     `));
   });
 });
