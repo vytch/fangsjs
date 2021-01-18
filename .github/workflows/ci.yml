@@ -24,6 +24,11 @@ jobs:
           node-version: "12.x"
       - run: npm ci
       - run: npm run test -- --coverage
+      - name: upload test coverage
+        uses: actions/upload-artifact@v1
+        with:
+          name: code-coverage
+          path: coverage
       - name: Build project
         if: github.event_name == 'push'
         run: npm run build
