@@ -256,6 +256,10 @@ export class Fang {
       return sText;
     } else { return "";}
   }
+  
+  render():string {
+   return this.$container.html();
+  }
 
   getTranslated():string {
     return this.translated;
