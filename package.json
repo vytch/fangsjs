@@ -7,9 +7,6 @@
     "type": "git",
     "url": "https://github.com/vytch/fangsjs.git"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com"
-  },
   "main": "dist/index.js",
   "files": "dist",
   "typings": "dist/index.d.ts",
