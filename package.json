@@ -1,11 +1,11 @@
 {
   "name": "fangs.js",
-  "version": "1.0.3",
+  "version": "0.0.0-development",
   "description": "",
   "homepage": "https://github.com/vytch/fangsjs",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/vytch/fangsjs.git"
+    "url": "https://github.com/vytch/fangsjs.git"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com"
@@ -17,8 +17,9 @@
     "commit": "cz",
     "build": "rollup -c",
     "watch": "rollup -c -w",
-    "test": "jest",
-    "gen": "plop --plopfile config/generators/index.js"
+    "test": "jest --coverage",
+    "gen": "plop --plopfile config/generators/index.js",
+    "semantic-release": "semantic-release"
   },
   "author": "",
   "license": "ISC",
@@ -42,12 +43,19 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-register": "^6.26.0",
     "commitizen": "^4.2.2",
+    "cz-conventional-changelog": "^3.3.0",
     "jest": "^26.6.3",
     "plop": "^2.7.4",
     "rollup": "^2.36.1",
     "rollup-plugin-delete": "^2.0.0",
     "rollup-plugin-typescript2": "^0.29.0",
     "ts-jest": "^26.4.4",
-    "typescript": "^4.1.3"
+    "typescript": "^4.1.3",
+    "semantic-release": "^17.3.3"
+  },
+  "config": {
+    "commitizen": {
+      "path": "./node_modules/cz-conventional-changelog"
+    }
   }
 }
