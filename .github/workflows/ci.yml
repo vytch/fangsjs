@@ -51,11 +51,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: "cat package.json"
         run: cat ./package.json
-      - name: Publighing
-        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
       - name: Upload to coverage report
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: npx codecov
