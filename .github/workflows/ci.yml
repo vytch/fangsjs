@@ -43,6 +43,7 @@ jobs:
           GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
           NPM_TOKEN: ${{secrets.NPM_TOKEN}}
       - name: "Automated Version Bump"
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         uses: "phips28/gh-action-bump-version@master"
         with:
           tag-prefix: ''
